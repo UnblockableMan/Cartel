@@ -81,7 +81,12 @@
     html.game-open .loading-indicator .spinner{animation:spin 0.8s linear infinite !important;transition:none !important}
     html.game-open #game-viewer,#game-viewer.active{background:#000}
     html.perf-mode img,html.perf-mode picture{display:none !important}
-    html.perf-mode #bg-canvas,html.perf-mode #starfield-bg,html.perf-mode #topography-canvas,html.perf-mode #matrix-canvas,html.perf-mode #waves-bg,html.perf-mode #globe-bg,html.perf-mode #dots-bg,html.perf-mode #fog-bg,html.perf-mode #tunnel-bg,html.perf-mode #noise-bg,html.perf-mode #custom-bg{display:none !important}
+    html.perf-mode #bg-canvas,html.perf-mode #starfield-bg,html.perf-mode #topography-canvas,html.perf-mode #matrix-canvas,html.perf-mode #waves-bg,html.perf-mode #globe-bg,html.perf-mode #dots-bg,html.perf-mode #fog-bg,html.perf-mode #tunnel-bg,html.perf-mode #noise-bg,html.perf-mode #custom-bg,html.perf-mode #bg-canvas canvas{display:none !important}
+    html.perf-mode body::after,html.perf-mode body:after{display:none !important}
+    html.perf-mode #home,html.perf-mode .home-music-player,html.perf-mode .home-music-volume{display:none !important}
+    html.perf-mode #loading-screen,html.perf-mode #boot-screen,html.perf-mode #gv-loading,html.perf-mode .loading-indicator{display:none !important}
+    html.perf-mode .sidebar-btn[data-tab="home"],html.perf-mode .sidebar-btn[data-tab="console"],html.perf-mode #music-btn,html.perf-mode #music-popup,html.perf-mode .gv-settings-row,html.perf-mode #gv-console,html.perf-mode .gv-vol{display:none !important}
+    html.perf-mode,html.perf-mode *,html.perf-mode a,html.perf-mode button{ cursor:auto !important; }
     a,button,.sidebar-btn,.card,.game-card,.play-btn,.partner-card a,.media-cat,.game-cat,.gv-btn,.link-item a{cursor:var(--cursor-link);}
     .loading-cursor{cursor:var(--cursor-wait);}
     html.loading-active{cursor:var(--cursor-wait)!important;}html.loading-active *{cursor:var(--cursor-wait)!important;}
@@ -763,6 +768,11 @@
     .social-links {
       display: flex; align-items: center; justify-content: center;
       gap: 12px; margin-top: 20px;
+      position: relative; min-height: 40px; overflow: hidden;
+    }
+    .social-links::after {
+      content: ''; position: absolute; inset: 0; z-index: 2;
+      background: #000; pointer-events: auto;
     }
     .social-btn {
       display: flex; align-items: center; justify-content: center;
@@ -1628,6 +1638,11 @@
               <div style="text-align: center;">
                 <h2 class="sign-in-services">Or sign in using:</h2>
               </div>
+              <div class="social-link">
+                <a href="javascript:void(0);" class="microsoft" id="login_windowslink" title="Sign in with Windows" aria-label="Sign in with your Microsoft Account" tabindex="0"><i class="default fa fa-windows"></i><i class="hover fa fa-windows"></i><span class="sr-only">Sign in with Windows</span></a>
+                <a href="/quickcard" class="qrcode" id="login_qrcodelink" title="Sign in with Quickcard" aria-label="Sign in with your quick card" tabindex="0"><i class="default fa icon-qrcode-logins"></i><i class="hover fa icon-qrcode-logins-hover"></i><span class="sr-only">Sign in with Quickcard</span></a>
+              </div>
+            </div>
           </div>
           <div class="lp-login-footer">
             <div class="cl-footer-logo-container"><svg id="lp-cl-cloud-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 209.2 149.3">
@@ -1775,8 +1790,8 @@
       <div id="ad-slot-top" style="display:none;width:100%;max-width:970px;margin:0 auto 12px;padding:0 12px;box-sizing:border-box;align-items:stretch;justify-content:center;"></div>
       <div class="tab-content active" id="home">
         <div class="date-section">
-          <div class="day-name" id="dayName">SATURDAY</div>
-          <div class="full-date" id="fullDate">MAY 03, 2026</div>
+          <div class="day-name" id="dayName">TIME</div>
+          <div class="full-date" id="fullDate">00:00:00</div>
         </div>
         <h2 id="welcome-heading" style="font-family:'Pacifico',cursive;font-weight:400;font-size:36px;">Welcome!</h2>
         <div class="search-bar" style="position:relative;">
@@ -1808,11 +1823,11 @@
         <div class="quote-section">
           <div id="quote"></div>
         </div>
-        <!--
+        <div class="social-links">
           <a href="https://www.tiktok.com/@սոƅⵏосkеԁzone" target="_blank" class="social-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"></path></svg><span class="social-label">TikTok</span></a>
           <a href="https://www.youtube.com/@realսոƅⵏосkеԁzone" target="_blank" class="social-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.6A3 3 0 0 0 .5 6.2C0 7.9 0 12 0 12s0 4.1.5 5.8a3 3 0 0 0 2.1 2.1c1.7.6 9.4.6 9.4.6s7.7 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 16.1 24 12 24 12s0-4.1-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" fill="currentColor" stroke="none"></path></svg><span class="social-label">YouTube</span></a>
           <a href="https://discord.gg/v66D3fn4kD" target="_blank" class="social-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" fill="currentColor" stroke="none"></path></svg><span class="social-label">Discord</span></a>
-        </div> -->
+        </div>
       </div>
 
       <div class="tab-content" id="media">
@@ -2932,6 +2947,7 @@
               <a href="https://s3.amazonaws.com/fernlinks/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/fernlinks/index.html</a>
               <a href="https://s3.amazonaws.com/classworks/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/classworks/index.html</a>
               <a href="https://s3.amazonaws.com/bull33/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bull33/index.html</a>
+              <a href="https://s3.amazonaws.com/bullbestyoutuber/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullbestyoutuber/index.html</a>
               <a href="https://s3.amazonaws.com/bulledu/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bulledu/index.html</a>
               <a href="https://s3.amazonaws.com/bullguardian/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullguardian/index.html</a>
               <a href="https://s3.amazonaws.com/bullisgoated/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/bullisgoated/index.html</a>
@@ -2945,6 +2961,7 @@
               <a href="https://s3.amazonaws.com/macrologoat/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/macrologoat/index.html</a>
               <a href="https://s3.amazonaws.com/macrolomath/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/macrolomath/index.html</a>
               <a href="https://s3.amazonaws.com/deaganfern/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/deaganfern/index.html</a>
+              <a href="https://bullbestyoutuber.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullbestyoutuber.s3.amazonaws.com/index.html</a>
               <a href="https://bulledu.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bulledu.s3.amazonaws.com/index.html</a>
               <a href="https://bullguardian.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullguardian.s3.amazonaws.com/index.html</a>
               <a href="https://bullisgoated.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullisgoated.s3.amazonaws.com/index.html</a>
@@ -2961,6 +2978,7 @@
               <a href="https://2027games.s3.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">2027games.s3.amazonaws.com/index.html <span style="background:#ff4444;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:4px;text-decoration:none;">NEW</span></a>
               <a href="https://s3.amazonaws.com/2027games/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/2027games/index.html <span style="background:#ff4444;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:4px;text-decoration:none;">NEW</span></a>
               <a href="https://s3.amazonaws.com/writevc/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/writevc/index.html <span style="background:#ff4444;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:4px;text-decoration:none;">NEW</span></a>
+              <a href="https://bullbestyoutuber.s3.us-east-1.amazonaws.com/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">bullbestyoutuber.s3.us-east-1.amazonaws.com/index.html <span style="background:#ff4444;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:4px;text-decoration:none;">NEW</span></a>
               <a href="https://s3.amazonaws.com/onelastlink/index.html" target="_blank" style="color:var(--accent);text-decoration:underline;font-size:13px;">s3.amazonaws.com/onelastlink/index.html <span style="background:#ff4444;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:4px;text-decoration:none;">NEW</span></a>
             </div>
           </div>
@@ -3112,7 +3130,7 @@
       </div>
 
       <div class="tab-content" id="settings">
-        <div style="font-size:13px;color:#fff;font-weight:bold;margin-bottom:12px;">Version 2026.09.14</div>
+        <div style="font-size:13px;color:#fff;font-weight:bold;margin-bottom:12px;">Version 2026.09.15</div>
         <div class="games-grid" style="display:grid;gap:16px;">
           <div class="game-card" style="padding:20px;">
             <div class="settings-card-head">
@@ -4075,8 +4093,9 @@
 
     function animate(now) {
       if (window.__perfMode) { linesRunning = false; return; }
+      if (canvas.style.display === 'none') { linesRunning = false; return; }
       frame++;
-      if (canvas.style.display === 'none' || document.hidden) {
+      if (document.hidden) {
         lastFrameT = now;
         requestAnimationFrame(animate);
         return;
@@ -4169,14 +4188,13 @@
 
       requestAnimationFrame(animate);
     }
-    animate();
-    window.__linesStart = function () { if (!linesRunning) animate(); };
+    window.__linesStart = function () { if (!linesRunning) { linesRunning = true; requestAnimationFrame(animate); } };
 
     /* Starfield background */
     (function(root) {
       const Starfield = {};
       let canvas, ctx, width, height;
-      let stars = [], rafId = null, running = false, accentCache = null, accentTick = 0;
+      let stars = [], rafId = null, running = false, accentCache = null, accentTick = 0, lastDraw = 0;
       function accentRGB() {
         let c = '';
         try { c = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); } catch (e) {}
@@ -4213,10 +4231,12 @@
         height = container.clientHeight || window.innerHeight;
         canvas.width = width; canvas.height = height;
         stars = [];
-        const count = Math.floor((width*height)/2600);
+        const count = Math.floor((width*height)/4200);
         for (let i = 0; i < count; i++) stars.push(makeStar(true));
       }
       function draw(timestamp) {
+        if (timestamp - lastDraw < 33) { rafId = requestAnimationFrame(draw); return; }
+        lastDraw = timestamp;
         const time = timestamp/1000;
         if (accentTick++ % 30 === 0) accentCache = accentRGB();
         ctx.clearRect(0,0,width,height);
@@ -4294,7 +4314,10 @@
       const tCtx = tCanvas.getContext('2d');
       function topogResize() { tCanvas.width = window.innerWidth; tCanvas.height = window.innerHeight; }
       topogResize(); addEventListener('resize', topogResize);
-      function draw() {
+      let topogLast = 0;
+      function draw(ts) {
+        if (ts - topogLast < 33) { topogRAF = requestAnimationFrame(draw); return; }
+        topogLast = ts;
         topogTick += 0.008;
         const w = tCanvas.width, h = tCanvas.height;
         tCtx.fillStyle = "#050001";
@@ -4350,11 +4373,16 @@
       initMatrix();
       function resizeMatrix() { initMatrix(); }
       addEventListener('resize', resizeMatrix);
-      let lastTime = 0;
+      let lastTime = 0, cachedAccent = null, accentReads = 0;
       function matrixLoop(ts) {
         if (ts - lastTime < 33) { matrixRAF = requestAnimationFrame(matrixLoop); return; }
         lastTime = ts;
-        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff6600';
+        if (accentReads++ % 15 === 0) {
+          var _a = null;
+          try { _a = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(); } catch (e) {}
+          cachedAccent = (_a && /^#/.test(_a)) ? _a : '#ff6600';
+        }
+        var accentColor = cachedAccent;
         mCtx.fillStyle = 'rgba(0,0,0,0.08)';
         mCtx.fillRect(0, 0, mw, mh);
         mCtx.fillStyle = accentColor;
@@ -4400,7 +4428,7 @@
     let noiseInitialized = false;
     function initVanta(name, el, opts) {
       if (typeof VANTA !== 'undefined' && VANTA[name]) {
-        return VANTA[name](Object.assign({ el: el, mouseControls: true, touchControls: true, gyroControls: false, minHeight: 200, minWidth: 200, scale: 1, scaleMobile: 1 }, opts));
+        return VANTA[name](Object.assign({ el: el, mouseControls: false, touchControls: false, gyroControls: false, minHeight: 200, minWidth: 200, scale: 0.6, scaleMobile: 0.5 }, opts));
       }
       return null;
     }
@@ -4461,10 +4489,10 @@
         camera.position.z=30;
         var renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
         renderer.setSize(innerWidth,innerHeight);
-        renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 1));
         renderer.setClearColor(0x050001,1);
         el.appendChild(renderer.domElement);
-        var particleCount=3000;
+        var particleCount=1200;
         var geometry=new THREE.BufferGeometry();
         var positions=new Float32Array(particleCount*3);
         var colors=new Float32Array(particleCount*3);
@@ -4497,7 +4525,10 @@
           ring.material.opacity=0.1-ri*0.008;
           scene.add(ring);
         }
-        function animateTunnel(){
+        var lastTun=0;
+        function animateTunnel(ts){
+          if(ts-lastTun<33){ tunnelRafId=requestAnimationFrame(animateTunnel); return; }
+          lastTun=ts;
           points.rotation.z+=0.001;
           var pos=geometry.attributes.position.array;
           for(var i=0;i<particleCount;i++){
@@ -4550,6 +4581,7 @@
         if (el.style.display === 'none' || el.querySelector('shader-art')) return;
         var shaderArt=document.createElement('shader-art');
         shaderArt.setAttribute('autoplay','');
+        shaderArt.setAttribute('dpr','1');
         shaderArt.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;';
         var hex=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#ff6600';
         var r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
@@ -4708,6 +4740,28 @@
       if (root) {
         if (on) root.classList.add('perf-mode'); else root.classList.remove('perf-mode');
       }
+      function stopAllMusic() {
+        try { var bm = document.getElementById('bg-music'); if (bm) { bm.pause(); bm.muted = true; } } catch (e) {}
+        try { if (window.stopBgMusic) window.stopBgMusic(); } catch (e) {}
+      }
+      if (on) {
+        try { stopAllMusic(); } catch (e) {}
+        try { document.getElementById('hm-volume').disabled = true; } catch (e) {}
+        try { document.querySelectorAll('[data-gv-slider]').forEach(function(s) { s.disabled = true; }); } catch (e) {}
+        try { if (window.stopTetoCursor) window.stopTetoCursor(); } catch (e) {}
+        try { var cs = document.getElementById('custom-cursor-style'); if (cs) cs.remove(); } catch (e) {}
+        try { var ts = document.getElementById('teto-cursor-style'); if (ts) ts.remove(); } catch (e) {}
+        try { document.documentElement.style.cursor = ''; } catch (e) {}
+        try { if (document.getElementById('home').classList.contains('active') && typeof switchTab === 'function') switchTab('games'); } catch (e) {}
+      } else {
+        try { document.getElementById('hm-volume').disabled = false; } catch (e) {}
+        try { document.querySelectorAll('[data-gv-slider]').forEach(function(s) { s.disabled = false; }); } catch (e) {}
+        try {
+          var _savedCursor = localStorage.getItem('activeCursor');
+          if (_savedCursor && _savedCursor !== 'default' && typeof setCustomCursor === 'function') setCustomCursor(_savedCursor);
+          else if ((!_savedCursor || _savedCursor === 'default') && typeof window.startTetoCursor === 'function' && !_savedCursor) window.startTetoCursor();
+        } catch (e) {}
+      }
       if (!on) {
         if (window.__perfImgObs) { window.__perfImgObs.disconnect(); window.__perfImgObs = null; }
         try { setBackground(localStorage.getItem('bgMode') || 'starfield'); } catch (e) {}
@@ -4767,6 +4821,15 @@
       var c = document.getElementById('perf-mode-check');
       if (c) c.checked = on;
       applyPerfMode(on);
+      if (on) {
+        document.addEventListener('DOMContentLoaded', function() {
+          try {
+            var home = document.getElementById('home');
+            if (home && home.classList.contains('active')) switchTab('games');
+            else if (!document.querySelector('.tab-content.active')) switchTab('games');
+          } catch (e) {}
+        });
+      }
     })();
 
     /* ─── FPS SPOOFER ─── */
@@ -5058,6 +5121,7 @@
         'https://quantil.jsdelivr.net/gh/matheveryday25/math@latest/cat.mp3'
       ];
       window.playRandomTrack = function() {
+        if (window.__perfMode) return;
         var next;
         do { next = trackList[Math.floor(Math.random() * trackList.length)]; }
         while (next === bgAudio.src && trackList.length > 1);
@@ -5144,9 +5208,11 @@
     }
 
     const startTime = Date.now();
-    if (!getStartupLoadingScreen()) {
+    if (window.__perfMode || !getStartupLoadingScreen()) {
       timerEl.style.display = 'none';
       loadingScreen.style.display = 'none';
+      var bootS = document.getElementById('boot-screen');
+      if (bootS) bootS.style.display = 'none';
       mainContent.classList.add('visible');
       try { _restoreCloak(); } catch (e2) {}
       try { applyAdLayout(localStorage.getItem('adLayout') || 'bottom'); } catch (e3) {}
@@ -5178,6 +5244,7 @@
 
     // Tab Switching
     function switchTab(tabId) {
+      if (window.__perfMode && (tabId === 'home' || tabId === 'music' || tabId === 'console')) return;
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
@@ -5277,13 +5344,11 @@
     // Date Logic
     function updateDate() {
       const now = new Date();
-      const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
-      const months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
-      document.getElementById('dayName').textContent = days[now.getDay()];
-      document.getElementById('fullDate').textContent = `${months[now.getMonth()]} ${String(now.getDate()).padStart(2, '0')}, ${now.getFullYear()}`;
+      document.getElementById('dayName').textContent = 'TIME';
+      document.getElementById('fullDate').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
     updateDate();
-    setInterval(updateDate, 60000);
+    setInterval(updateDate, 1000);
 
     // Quote Rotator
     const quotes = [
@@ -5525,6 +5590,7 @@
     }, true);
 
     function toggleMusic() {
+      if (window.__perfMode) return;
       const audio = document.getElementById('bg-music');
       const icon = document.getElementById('music-icon');
       if (audio.paused) {
@@ -5781,7 +5847,7 @@ function injectGameAudio(fw, doc) {
       if (/<head/i.test(html)) html = html.replace(/<head([^>]*)>/i, '<head$1>' + ytStub);
       else html = ytStub + html;
       if (fpsSpooferOn()) {
-        var spoof = '<scr' + 'ipt>(function(){var fps=360;try{var s=parseInt(localStorage.getItem("fpsMax"),10);if(!isNaN(s)&&s>0)fps=Math.min(1000,Math.max(30,Math.round(s)));}catch(e){}try{Object.defineProperty(window.screen,"refreshRate",{configurable:true,get:function(){return fps;}});}catch(e){}if(!window.requestAnimationFrame)return;var queues=[],idByCb={},sched=false,lastReal=null,fakeNow=null,dt=1000/fps,nextId=1,nativeRaf=window.requestAnimationFrame,nativeCaf=window.cancelAnimationFrame;var nowMs=function(){return (window.performance&&performance.now)?performance.now():Date.now();};var work=0;var tick=function(){sched=false;var t=nowMs(),el=t-lastReal;lastReal=t;if(fakeNow===null)fakeNow=lastReal;work=(el>250)?0:(work+el*fps/1000);var ticks=(el>250)?1:Math.min(Math.max(1,Math.round(el/dt)),Math.max(1,Math.min(12,Math.floor(work))));work=Math.max(0,work-ticks);var list=queues.slice();queues.length=0;for(var i=0;i<list.length;i++){delete idByCb[list[i]];}for(var i2=0;i2<ticks;i2++){fakeNow+=dt;for(var k=0;k<list.length;k++){try{list[k](fakeNow);}catch(e){}}}};window.requestAnimationFrame=function(cb){if(typeof cb!=="function")return 0;if(queues.indexOf(cb)!==-1)return idByCb[cb]||0;queues.push(cb);var id=nextId++;idByCb[cb]=id;if(!sched){sched=true;if(lastReal===null)lastReal=nowMs();if(nativeRaf)nativeRaf(tick);}return id;};window.cancelAnimationFrame=function(id){var cb=null;for(var key in idByCb){if(idByCb[key]===id){cb=key;break;}}if(cb!==null){var i3=queues.indexOf(cb);if(i3!==-1)queues.splice(i3,1);delete idByCb[cb];}return nativeCaf?nativeCaf(id):undefined;};})();</scr' + 'ipt>';
+        var spoof = '<scr' + 'ipt>(function(){var fps=360;try{var s=parseInt(localStorage.getItem("fpsMax"),10);if(!isNaN(s)&&s>0)fps=Math.min(1000,Math.max(30,Math.round(s)));}catch(e){}var nativeRaf=window.requestAnimationFrame;var finish=function(){try{Object.defineProperty(window.screen,"refreshRate",{configurable:true,get:function(){return fps;}});}catch(e){}if(!nativeRaf)return;var queues=[],idByCb={},sched=false,lastReal=null,fakeNow=null,dt=1000/fps,nextId=1,nativeCaf=window.cancelAnimationFrame;var nowMs=function(){return (window.performance&&performance.now)?performance.now():Date.now();};var work=0;var tick=function(){sched=false;var t=nowMs(),el=t-lastReal;lastReal=t;if(fakeNow===null)fakeNow=lastReal;work=(el>250)?0:(work+el*fps/1000);var ticks=(el>250)?1:Math.min(Math.max(1,Math.round(el/dt)),Math.max(1,Math.min(12,Math.floor(work))));work=Math.max(0,work-ticks);var list=queues.slice();queues.length=0;for(var i=0;i<list.length;i++){delete idByCb[list[i]];}for(var i2=0;i2<ticks;i2++){fakeNow+=dt;for(var k=0;k<list.length;k++){try{list[k](fakeNow);}catch(e){}}}};window.requestAnimationFrame=function(cb){if(typeof cb!=="function")return 0;if(queues.indexOf(cb)!==-1)return idByCb[cb]||0;queues.push(cb);var id=nextId++;idByCb[cb]=id;if(!sched){sched=true;if(lastReal===null)lastReal=nowMs();if(nativeRaf)nativeRaf(tick);}return id;};window.cancelAnimationFrame=function(id){var cb=null;for(var key in idByCb){if(idByCb[key]===id){cb=key;break;}}if(cb!==null){var i3=queues.indexOf(cb);if(i3!==-1)queues.splice(i3,1);delete idByCb[cb];}return nativeCaf?nativeCaf(id):undefined;};};if(typeof nativeRaf==="function"){var G=[],L=null,T0=Date.now();(function(){function step(ts){if(L!==null){var dg=ts-L;if(dg>0&&dg<100)G.push(dg);}L=ts;if(G.length<8&&Date.now()-T0<1500){nativeRaf(step);return;}var real=60;if(G.length>=4){var ss=G.slice().sort(function(a,b){return a-b;});var mm=ss[Math.floor(ss.length/2)];var rr=Math.round(1000/mm);if(rr>=24&&rr<=400)real=rr;}fps=Math.min(fps,real);if(fps<30)fps=30;finish();}nativeRaf(step);})();}else finish();})();</scr' + 'ipt>';
         if (/<head/i.test(html)) html = html.replace(/<head([^>]*)>/i, '<head$1>' + spoof);
         else html = spoof + html;
       }
@@ -5864,6 +5930,7 @@ function injectGameAudio(fw, doc) {
     }
 
     function toggleConsoleOverlay() {
+      if (window.__perfMode) return;
       var ov = document.getElementById('console-overlay');
       ov.classList.toggle('active');
       if (ov.classList.contains('active') && typeof ensureLunaConsole === 'function') {
@@ -7189,7 +7256,7 @@ var glow = 'rgba(' + r + ',' + g + ',' + b + ',0.5)';
         var sel = document.getElementById('setup-cloak-select');
         if (!sel || typeof cloakPresets === 'undefined') return;
         sel.innerHTML = '';
-        var order = ['classroom','drive','gmail','youtube','google','newtab','calendar','sites','slides','sheets','khanacademy','quizlet','duolingo','wikipedia','clipchamp'];
+        var order = ['classroom','drive','docs','gmail','youtube','google','newtab','calendar','sites','slides','sheets','khanacademy','quizlet','duolingo','wikipedia','clipchamp'];
         order.forEach(function(k) {
           if (!cloakPresets[k]) return;
           var o = document.createElement('option');
@@ -7336,7 +7403,7 @@ var glow = 'rgba(' + r + ',' + g + ',' + b + ',0.5)';
         }
         var jo = {
           app: 'unblockedzone',
-          version: 20260914,
+          version: 20260915,
           exported: new Date().toISOString(),
           settings: data
         };
@@ -7738,6 +7805,7 @@ function activate() {
   }
 
   window.hmPlay = function(idx) {
+    if (window.__perfMode) return;
     var a = ensureAudio();
     if (!a || idx < 0 || idx >= tracks.length) return;
     currentIdx = idx;
@@ -7758,6 +7826,7 @@ function activate() {
   };
 
   window.hmTogglePlay = function() {
+    if (window.__perfMode) return;
     var a = ensureAudio();
     if (!a) return;
     if (a.paused) {
@@ -7786,6 +7855,7 @@ function activate() {
   };
 
   window.hmSetVolume = function(val) {
+    if (window.__perfMode) return;
     var a = ensureAudio();
     if (a) a.volume = val / 100;
     localStorage.setItem(HM_VOL_KEY, val);
