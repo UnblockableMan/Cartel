@@ -3206,7 +3206,6 @@
               <option value="">-- Select Preset --</option>
               <option value="classroom">Google Classroom</option>
               <option value="drive">Google Drive</option>
-              <option value="docs">Google Docs</option>
               <option value="gmail">Gmail</option>
               <option value="youtube">YouTube</option>
               <option value="google">Google</option>
@@ -5349,16 +5348,14 @@
     ];
     const quoteEl = document.getElementById('quote');
     var shown = [];
+    var requestedQuotes = ["gucci morty", "w isaac", "fuck securly", "do ur wok sonion"];
+    var requestedQuoteIndex = 0;
     setTimeout(() => { quoteEl.style.opacity = '1'; }, 300);
 
     function pickQuote() {
-      var pool = quotes.slice(0, -1);
-      if (shown.length >= pool.length) { shown = []; return quotes[quotes.length - 1]; }
-      var idx;
-      do { idx = Math.floor(Math.random() * pool.length); }
-      while (shown.indexOf(idx) !== -1);
-      shown.push(idx);
-      return pool[idx];
+      var quote = requestedQuotes[requestedQuoteIndex];
+      requestedQuoteIndex = (requestedQuoteIndex + 1) % requestedQuotes.length;
+      return quote;
     }
 
     function typeQuote(q, done) {
@@ -7200,7 +7197,7 @@ var glow = 'rgba(' + r + ',' + g + ',' + b + ',0.5)';
         var sel = document.getElementById('setup-cloak-select');
         if (!sel || typeof cloakPresets === 'undefined') return;
         sel.innerHTML = '';
-        var order = ['classroom','drive','docs','gmail','youtube','google','newtab','calendar','sites','slides','sheets','khanacademy','quizlet','duolingo','wikipedia','clipchamp'];
+        var order = ['classroom','drive','gmail','youtube','google','newtab','calendar','sites','slides','sheets','khanacademy','quizlet','duolingo','wikipedia','clipchamp'];
         order.forEach(function(k) {
           if (!cloakPresets[k]) return;
           var o = document.createElement('option');
