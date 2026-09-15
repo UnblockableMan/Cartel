@@ -36,7 +36,7 @@
   <link rel="icon" id="page-favicon" type="image/svg+xml" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAAAXNSR0IArs4c6QAAAhBJREFUOE9tk89rE1EQx78Tf0A22tg2W4qHVqPVtol3Dyq24M2r7B48WS9F0KNQ0CLoP9CbCJ6zvSiKIlY02ggFr2tvmjbVKGSTIs22iSk7MvM21VIfebz3yHw/7/tmZunW1aN8ZXIbIAYR4mE2zAAhATCB5RwRmOU/AiLCk9I+UGfJZuIQRBItYfFgAZhgESoknuCEgZEF6nxMsdzsb/Xjc8s2LlRsLMiqM2IgMvtcch1565cCqVM6xHKz1xjFfGNU3Rm/DOtAUoXNdjMGROAogpMpw8lU1BX9XjysgPn6KXiN0zsvSB20MDt5W2GzCw/QbIUqFqAAXLtiHLQ/9LC836uP6DQWgBtnp3Axe073xS+LmCs9BHYAK3DttRjwPs2i8YIT8Oon/3GQxL1LM3q+8+o+QnHAXQerCtAntIpHNNeFehZekP1bBQApyQEzwraIJaGSSIZjV+Da34yD1rterV0hOAYvOK6A/OAYcoPjusrwfyxjaeUTykFZIU5mDe7Ad+Ng622fAdSG4QXDuHl+GhMjF3Y56R6e+y/xqPRYxa5dNQ423/SbHNSGUKgN4en1wn/F6qS6jJlnd1Xs2FWtEG0u2FpGP+yBH6ZxZmxqF0AbKh5h+BNfV18gZ20gb20YB+HrAemzbvX23q4AaWX5mVXbW5uNQNcup9md2B8LSWO77byXlog/MNMrXnEbfwCrwRQID/CEeAAAAABJRU5ErkJggg==">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pacifico&family=Roboto&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://quantil.jsdelivr.net">
   <style>
     @font-face{font-family:'ApplePixel';src:url('https://quantil.jsdelivr.net/gh/bradardeletethis/apple/font.woff2') format('woff2');font-weight:400;font-style:normal;}
@@ -74,7 +74,9 @@
     }
     *{box-sizing:border-box;margin:0;padding:0}
     *::-webkit-scrollbar{display:none}
-    html,body{height:100%;font-family:'ApplePixel',monospace,sans-serif;background:#050001;color:var(--accent);overflow:hidden;scrollbar-width:none;-ms-overflow-style:none;cursor:var(--cursor-default);}
+    html,body{height:100%;font-family:'Inter',sans-serif;background:#050001;color:var(--accent);overflow:hidden;scrollbar-width:none;-ms-overflow-style:none;cursor:var(--cursor-default);}
+    body,button,input,select,textarea{font-family:'Inter',sans-serif;}
+    h1,h2,h3,h4,h5,h6,#welcome-heading,.game-title,.settings-card-head h3{font-family:'Inter',sans-serif!important;font-weight:800!important;}
     html.perf-mode{background:#050001}
     html.perf-mode *{animation:none !important;transition:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;filter:none !important;will-change:auto !important;background-attachment:scroll !important;background-image:none !important}
     html.game-open *{animation:none !important;transition:none !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;filter:none !important;will-change:auto !important;background-attachment:scroll !important}
@@ -1786,14 +1788,13 @@
     </div>
 
     <main id="content-area">
-      <div id="adb-banner" style="display:none;width:100%;max-width:700px;margin:0 auto 12px;background:rgba(255,82,82,0.12);border:2px solid #ff5252;border-radius:8px;padding:10px 16px;font-size:13px;color:#ff5252;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;">Warning: Your ad blocker is on. Please disable it to keep this site free.</div>
       <div id="ad-slot-top" style="display:none;width:100%;max-width:970px;margin:0 auto 12px;padding:0 12px;box-sizing:border-box;align-items:stretch;justify-content:center;"></div>
       <div class="tab-content active" id="home">
         <div class="date-section">
           <div class="day-name" id="dayName">Cartel</div>
           <div class="full-date" id="fullDate">00:00:00</div>
         </div>
-        <h2 id="welcome-heading" style="font-family:'Pacifico',cursive;font-weight:400;font-size:36px;">Welcome!</h2>
+        <h2 id="welcome-heading" style="font-family:'Inter',sans-serif;font-weight:800;font-size:36px;">Welcome!</h2>
         <div class="search-bar" style="position:relative;">
           <input type="text" id="home-search-input" placeholder="Search..." style="padding-right:44px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -3174,6 +3175,21 @@
               <option value="sides">Both Sides (2 ads)</option>
             </select>
             <p style="color:#aaa;font-size:13px;margin-top:10px;">Status: <span id="adb-status">Checking...</span></p>
+          </div>
+          <div class="game-card" style="padding:20px;">
+            <div class="settings-card-head">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <h3>Interface</h3>
+            </div>
+            <p class="settings-help" style="margin-top:0;">Tune the clock and motion without changing the rest of your layout.</p>
+            <label style="display:flex;align-items:center;gap:10px;margin-top:12px;color:var(--accent);font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="clock-24-hour" onchange="setClock24Hour(this.checked)" style="width:18px;height:18px;accent-color:var(--accent);">
+              24-hour clock
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;margin-top:10px;color:var(--accent);font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="reduced-motion" onchange="setReducedMotion(this.checked)" style="width:18px;height:18px;accent-color:var(--accent);">
+              Reduce motion
+            </label>
           </div>
           <div class="game-card" style="padding:20px;">
             <div class="settings-card-head">
@@ -5185,7 +5201,6 @@
           mainContent.classList.add('visible');
           try { _restoreCloak(); } catch (e2) {}
           try { applyAdLayout(localStorage.getItem('adLayout') || 'bottom'); } catch (e3) {}
-          try { showAdBlockerNotice(); } catch (e4) {}
         }, 350);
       }
       var loadDone = document.readyState === 'complete';
@@ -5216,7 +5231,6 @@
       mainContent.classList.add('visible');
       try { _restoreCloak(); } catch (e2) {}
       try { applyAdLayout(localStorage.getItem('adLayout') || 'bottom'); } catch (e3) {}
-      try { showAdBlockerNotice(); } catch (e4) {}
       startStartupMusic();
     } else if (!getStartupBlockScreen()) {
       timerEl.style.display = 'none';
