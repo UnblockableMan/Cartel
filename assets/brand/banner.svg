@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050811"/>
+      <stop offset="100%" stop-color="#0a0d1c"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#9ad7ff"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <circle cx="220" cy="200" r="260" fill="url(#halo)"/>
+  <g stroke="#1a2138" stroke-width="1" opacity="0.6">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="900" y1="0" x2="900" y2="400"/>
+  </g>
+  <g transform="translate(80,80)" filter="url(#glow)">
+    <rect width="240" height="240" rx="56" fill="#070912"/>
+    <rect width="240" height="240" rx="56" fill="none" stroke="url(#mark)" stroke-width="2" opacity="0.55"/>
+    <path d="M 70 60 L 70 180 L 92 180 L 92 132 L 130 132 L 160 180 L 188 180 L 154 130 C 176 120 176 84 144 70 C 134 64 122 60 108 60 Z" fill="url(#mark)"/>
+    <path d="M 92 82 L 122 82 C 140 82 148 90 148 104 C 148 118 140 112 122 112 L 92 112 Z" fill="#070912"/>
+    <g stroke="url(#mark)" stroke-width="3" stroke-linecap="round">
+      <line x1="172" y1="60" x2="212" y2="48"/>
+      <line x1="170" y1="76" x2="208" y2="68"/>
+      <line x1="172" y1="90" x2="210" y2="88"/>
+    </g>
+  </g>
+  <text x="380" y="225" font-family="'Inter','Segoe UI',sans-serif" font-weight="800" font-size="128" fill="url(#word)" letter-spacing="-4">
+    Redu<tspan fill="url(#mark)">X</tspan>
+  </text>
+  <text x="386" y="288" font-family="'Inter','Segoe UI',sans-serif" font-weight="500" font-size="26" fill="#9fb3c8" letter-spacing="3">
+    STATIC - FAST - PROXY
+  </text>
+  <text x="386" y="338" font-family="'Inter','Segoe UI',sans-serif" font-weight="500" font-size="18" fill="#5a6d85" letter-spacing="2">
+    built by viroda1 and unblockableman
+  </text>
+</svg>

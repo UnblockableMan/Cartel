@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReduX — Static · Fast · Proxy</title>
+<meta name="description" content="ReduX — a static, fast web proxy built by viroda1 & UnblockableMan. Browse, play, and explore without limits.">
+<meta name="theme-color" content="#00e5ff">
+<meta name="keywords" content="ReduX, Redux proxy, static proxy, fast proxy, web unblocker, viroda1, UnblockableMan">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ReduX — Static · Fast · Proxy">
+<meta property="og:description" content="A static, fast web proxy built by viroda1 & UnblockableMan.">
+<meta property="og:image" content="assets/imgs/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ReduX — Static · Fast · Proxy">
+<meta name="twitter:image" content="assets/imgs/banner.png">
+<link rel="manifest" href="assets/manifest.json">
+<link rel="icon" type="image/svg+xml" href="assets/imgs/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/imgs/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/imgs/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/imgs/apple-touch-icon.png">
+<link rel="shortcut icon" href="assets/imgs/favicon.ico">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/Destroyed12121/Staticsj@main/JS/scramjet.all.js" defer></script>
+<script type="module">
+import * as BareMux from "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs";
+window.BareMux = BareMux;
+</script>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ReduX — static fast proxy
+   layout: title -> search -> toolbar -> view
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #050811;
+  --bg-soft: #0a0d1c;
+  --panel: rgba(13, 16, 28, 0.7);
+  --panel-solid: #0d1018;
+  --edge: rgba(0, 229, 255, 0.10);
+  --edge-strong: rgba(0, 229, 255, 0.30);
+  --accent: #00e5ff;
+  --accent-2: #3b82f6;
+  --accent-3: #8b5cf6;
+  --gradient: linear-gradient(135deg, #00e5ff 0%, #3b82f6 55%, #8b5cf6 100%);
+  --text: #ecf0f8;
+  --text-dim: #9fb3c8;
+  --text-faint: #5a6d85;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --glow: 0 0 24px rgba(0, 229, 255, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* animated background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.10), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.10), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.06), transparent 70%),
+    var(--bg);
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 0),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 0);
+  background-size: 48px 48px;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+}
+
+::selection { background: var(--accent); color: var(--bg); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.20); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+button { font-family: var(--font); cursor: pointer; border: none; background: none; color: inherit; }
+input, select { font-family: var(--font); color: var(--text); outline: none; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: #fff; }
+
+/* ════ HEADER — title at top ════ */
+.redux-header {
+  text-align: center;
+  padding: 48px 24px 24px;
+  position: relative;
+}
+.redux-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.redux-logo .mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--bg-soft);
+  border: 1px solid var(--edge-strong);
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.4));
+}
+.redux-logo .mark svg { width: 36px; height: 36px; }
+.redux-logo .wordmark {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.redux-tagline {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.redux-authors {
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+.redux-authors strong { color: var(--text-dim); font-weight: 600; }
+
+/* ════ SEARCH BAR — below title ════ */
+.redux-search-wrap {
+  max-width: 720px;
+  margin: 16px auto 0;
+  padding: 0 24px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.redux-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  padding: 14px 22px;
+  backdrop-filter: blur(18px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow);
+}
+.redux-search:focus-within {
+  border-color: var(--edge-strong);
+  box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.08), var(--glow);
+}
+.redux-search .search-icon {
+  width: 18px; height: 18px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.redux-search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+}
+.redux-search input::placeholder { color: var(--text-faint); }
+.redux-search select {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding-right: 4px;
+}
+.redux-search select option { background: var(--panel-solid); color: var(--text); }
+.redux-go {
+  background: var(--gradient);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(0, 229, 255, 0.30);
+}
+.redux-go:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0, 229, 255, 0.45); }
+.redux-go:active { transform: translateY(0); }
+
+/* ════ TOOLBAR — below search ════ */
+.redux-toolbar {
+  max-width: 1100px;
+  margin: 28px auto 0;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  border-bottom: 1px solid var(--edge);
+  flex-wrap: wrap;
+}
+.redux-toolbar .tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s, border-color 0.18s;
+  position: relative;
+  top: 1px;
+}
+.redux-toolbar .tab i { font-size: 14px; color: var(--text-faint); transition: color 0.18s; }
+.redux-toolbar .tab:hover { color: var(--text); }
+.redux-toolbar .tab:hover i { color: var(--accent); }
+.redux-toolbar .tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.redux-toolbar .tab.active i { color: var(--accent); }
+.redux-toolbar .spacer { flex: 1; }
+.redux-toolbar .ico-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  color: var(--text-dim);
+  transition: background 0.15s, color 0.15s;
+}
+.redux-toolbar .ico-btn:hover { background: var(--panel); color: var(--accent); }
+
+/* ════ VIEW CONTAINER ════ */
+.redux-views {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+  position: relative;
+  min-height: 60vh;
+}
+.redux-view { display: none; }
+.redux-view.active {
+  display: block;
+  animation: fadeIn 0.25s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════ HOME VIEW ════ */
+.home-hero {
+  text-align: center;
+  padding: 32px 0 48px;
+}
+.home-hero h2 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+.home-hero h2 span { background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.home-hero p {
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--edge);
+}
+
+/* shortcuts grid */
+.shortcuts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.shortcut {
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  padding: 16px 10px;
+  text-align: center;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+.shortcut:hover {
+  transform: translateY(-3px);
+  border-color: var(--edge-strong);
+  box-shadow: var(--glow);
+}
+.shortcut .ico {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 8px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(139, 92, 246, 0.18));
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-size: 20px;
+}
+.shortcut .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.shortcut .host {
+  font-size: 10px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+
+/* featured games strip */
+.featured-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+/* ════ GAMES VIEW ════ */
+.games-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.games-search {
+  flex: 1;
+  min-width: 240px;
+  position: relative;
+}
+.games-search input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  padding: 10px 18px 10px 40px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+.games-search input:focus { border-color: var(--edge-strong); }
+.games-search .ico {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-faint);
+  font-size: 14px;
+}
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+}
+.chip:hover { color: var(--accent); border-color: var(--edge-strong); }
+.chip.active {
+  background: var(--gradient);
+  color: var(--bg);
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+.game-card {
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.game-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--edge-strong);
+  box-shadow: 0 12px 28px rgba(0, 229, 255, 0.18);
+}
+.game-card .thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #0a0d1c, #1a1f3a);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.game-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.game-card:hover .thumb img { transform: scale(1.06); }
+.game-card .thumb .ph {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -1px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0, 229, 255, 0.18), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.18), transparent 60%),
+    #0a0d1c;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+}
+.game-card .name {
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.game-card .badge-local {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--gradient);
+  color: var(--bg);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.6px;
+  z-index: 2;
+}
+
+/* ════ APPS VIEW ════ */
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 18px;
+}
+.app-card {
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  padding: 24px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.app-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--edge-strong);
+  box-shadow: var(--glow);
+}
+.app-card .ico {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 14px;
+  background: var(--gradient);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  color: var(--bg);
+  box-shadow: 0 8px 18px rgba(0, 229, 255, 0.30);
+}
+.app-card .name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.app-card .desc {
+  font-size: 11px;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+/* ════ SETTINGS VIEW ════ */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+}
+.settings-card {
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+}
+.settings-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.field {
+  margin-bottom: 12px;
+}
+.field label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.field input, .field select {
+  width: 100%;
+  background: var(--panel-solid);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--text);
+  transition: border-color 0.18s;
+}
+.field input:focus, .field select:focus { border-color: var(--accent); }
+.server-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.server-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--panel-solid);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+}
+.server-opt:hover { border-color: var(--edge-strong); }
+.server-opt.active { border-color: var(--accent); background: rgba(0, 229, 255, 0.06); }
+.server-opt .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text-faint);
+  flex-shrink: 0;
+}
+.server-opt.active .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.server-opt .meta { flex: 1; min-width: 0; }
+.server-opt .name { font-size: 12px; font-weight: 600; }
+.server-opt .url { font-size: 10px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.server-opt .ping {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+.about-block {
+  padding: 8px 0;
+}
+.about-block p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.about-block strong { color: var(--text); }
+.about-block .links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.about-block .links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  transition: all 0.18s;
+}
+.about-block .links a:hover { color: var(--accent); border-color: var(--edge-strong); }
+
+/* ════ GAME/APPS VIEWER (iframe modal) ════ */
+#viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+  display: none;
+  z-index: 9999;
+  flex-direction: column;
+}
+#viewer.active { display: flex; }
+#viewer .bar {
+  height: 44px;
+  background: var(--panel-solid);
+  border-bottom: 1px solid var(--edge-strong);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+#viewer .title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#viewer .vbtn {
+  background: rgba(0, 229, 255, 0.10);
+  border: 1px solid var(--edge-strong);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+#viewer .vbtn:hover { background: rgba(0, 229, 255, 0.22); color: #fff; }
+#viewer .vbtn.close { color: #ff6680; border-color: rgba(255, 102, 128, 0.3); background: rgba(255, 102, 128, 0.10); }
+#viewer .vbtn.close:hover { background: rgba(255, 102, 128, 0.22); color: #fff; }
+#viewer .frame-wrap {
+  flex: 1;
+  position: relative;
+}
+#viewer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #000;
+  display: block;
+}
+
+/* ════ PROXY BROWSER VIEW ════ */
+#browser {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9000;
+  display: none;
+  flex-direction: column;
+}
+#browser.active { display: flex; }
+#browser .bar {
+  height: 48px;
+  background: var(--panel-solid);
+  border-bottom: 1px solid var(--edge);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+#browser .url-input {
+  flex: 1;
+  background: var(--panel-solid);
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text);
+  transition: border-color 0.18s;
+}
+#browser .url-input:focus { border-color: var(--accent); }
+#browser .frame-wrap {
+  flex: 1;
+  position: relative;
+}
+#browser iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+  display: block;
+}
+
+/* ════ TOAST ════ */
+#toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--panel-solid);
+  border: 1px solid var(--edge-strong);
+  color: var(--accent);
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 99999;
+  backdrop-filter: blur(20px);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ════ FOOTER ════ */
+.redux-footer {
+  text-align: center;
+  padding: 32px 24px 24px;
+  border-top: 1px solid var(--edge);
+  margin-top: 48px;
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.5px;
+}
+.redux-footer .links {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+.redux-footer .links a {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.redux-footer .links a:hover { color: var(--accent); }
+
+/* ════ RESPONSIVE ════ */
+@media (max-width: 720px) {
+  .redux-header { padding: 28px 16px 18px; }
+  .redux-logo .wordmark { font-size: 40px; }
+  .redux-logo .mark { width: 44px; height: 44px; }
+  .redux-search-wrap { padding: 0 16px; flex-direction: column; }
+  .redux-go { width: 100%; }
+  .redux-toolbar { padding: 0 8px; }
+  .redux-toolbar .tab { padding: 10px 12px; font-size: 12px; }
+  .redux-toolbar .tab .label-text { display: none; }
+  .redux-views { padding: 24px 16px 80px; }
+  .games-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+  .shortcuts { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
+}
+
+/* utility */
+.hidden { display: none !important; }
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--edge);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.boot {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  transition: opacity 0.4s;
+}
+.boot.hidden { opacity: 0; pointer-events: none; }
+.boot .logo {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.boot .sub {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+.boot .bar {
+  width: 200px; height: 2px;
+  background: var(--edge);
+  border-radius: 1px;
+  overflow: hidden;
+  position: relative;
+}
+.boot .bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient);
+  transform: translateX(-100%);
+  animation: bootSlide 1.4s ease-out forwards;
+}
+@keyframes bootSlide { to { transform: translateX(0); } }
+</style>
+</head>
+<body>
+
+<!-- boot overlay -->
+<div class="boot" id="boot">
+  <div class="logo">ReduX</div>
+  <div class="sub">static · fast · proxy</div>
+  <div class="bar"></div>
+</div>
+
+<!-- HEADER -->
+<header class="redux-header">
+  <div class="redux-logo">
+    <div class="mark">
+      <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#00e5ff"/>
+            <stop offset="55%" stop-color="#3b82f6"/>
+            <stop offset="100%" stop-color="#8b5cf6"/>
+          </linearGradient>
+        </defs>
+        <path d="M 78 70 L 78 188 L 100 188 L 100 142 L 138 142 L 168 188 L 196 188 L 162 138 C 184 128 184 92 152 78 C 142 72 130 70 116 70 Z" fill="url(#lg)"/>
+        <path d="M 100 92 L 130 92 C 148 92 156 100 156 114 C 156 128 148 122 130 122 L 100 122 Z" fill="#070912"/>
+      </svg>
+    </div>
+    <div class="wordmark">ReduX</div>
+  </div>
+  <div class="redux-tagline">static · fast · proxy</div>
+  <div class="redux-authors">built by <strong>viroda1</strong> &amp; <strong>UnblockableMan</strong></div>
+</header>
+
+<!-- SEARCH BAR -->
+<form class="redux-search-wrap" id="searchForm">
+  <div class="redux-search">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7"/>
+      <line x1="16.5" y1="16.5" x2="22" y2="22"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search the web or enter a URL..." autocomplete="off" spellcheck="false">
+    <select id="engine">
+      <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+      <option value="https://search.brave.com/search?q=">Brave</option>
+      <option value="https://www.bing.com/search?q=">Bing</option>
+      <option value="https://www.google.com/search?q=">Google</option>
+      <option value="https://search.yahoo.com/search?p=">Yahoo</option>
+    </select>
+  </div>
+  <button type="submit" class="redux-go">Go</button>
+</form>
+
+<!-- TOOLBAR -->
+<nav class="redux-toolbar">
+  <button class="tab active" data-view="home"><i class="fa-solid fa-house"></i><span class="label-text">Home</span></button>
+  <button class="tab" data-view="games"><i class="fa-solid fa-gamepad"></i><span class="label-text">Games</span></button>
+  <button class="tab" data-view="apps"><i class="fa-solid fa-border-all"></i><span class="label-text">Apps</span></button>
+  <button class="tab" data-view="settings"><i class="fa-solid fa-gear"></i><span class="label-text">Settings</span></button>
+  <button class="tab" data-view="about"><i class="fa-solid fa-circle-info"></i><span class="label-text">About</span></button>
+  <span class="spacer"></span>
+  <button class="ico-btn" id="wisp-btn" title="Proxy server"><i class="fa-solid fa-bolt"></i></button>
+</nav>
+
+<!-- VIEWS -->
+<main class="redux-views">
+
+  <!-- HOME -->
+  <section class="redux-view active" id="view-home">
+    <div class="home-hero">
+      <h2>Welcome to <span>ReduX</span></h2>
+      <p>A static, fast web proxy. Browse the open web, run apps, and play games — all from one page. No installs, no friction.</p>
+    </div>
+    <div class="section-title"><i class="fa-solid fa-bolt"></i> Quick Shortcuts</div>
+    <div class="shortcuts" id="shortcuts"></div>
+    <div class="section-title"><i class="fa-solid fa-fire"></i> Popular Games</div>
+    <div class="featured-strip" id="featured"></div>
+  </section>
+
+  <!-- GAMES -->
+  <section class="redux-view" id="view-games">
+    <div class="games-controls">
+      <div class="games-search">
+        <i class="fa-solid fa-magnifying-glass ico"></i>
+        <input type="text" id="gamesSearch" placeholder="Search games..." autocomplete="off">
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="games-grid" id="gamesGrid"></div>
+  </section>
+
+  <!-- APPS -->
+  <section class="redux-view" id="view-apps">
+    <div class="section-title"><i class="fa-solid fa-border-all"></i> Built-in Apps</div>
+    <div class="apps-grid" id="appsGrid"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="redux-view" id="view-settings">
+    <div class="settings-grid">
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-server"></i> Proxy Server</h3>
+        <div class="field">
+          <label>Active WISP Server</label>
+          <div class="server-list" id="serverList"></div>
+        </div>
+        <div class="field">
+          <label>Add Custom Server</label>
+          <div style="display:flex;gap:6px">
+            <input type="text" id="customWisp" placeholder="wss://your-server.com/wisp/" spellcheck="false">
+            <button class="redux-go" style="padding:10px 16px;font-size:12px" id="addWisp">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-palette"></i> Appearance</h3>
+        <div class="field">
+          <label>Accent Color</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="accentPicker">
+            <button data-c="#00e5ff" style="background:#00e5ff"></button>
+            <button data-c="#3b82f6" style="background:#3b82f6"></button>
+            <button data-c="#8b5cf6" style="background:#8b5cf6"></button>
+            <button data-c="#10b981" style="background:#10b981"></button>
+            <button data-c="#f59e0b" style="background:#f59e0b"></button>
+            <button data-c="#ef4444" style="background:#ef4444"></button>
+            <button data-c="#ec4899" style="background:#ec4899"></button>
+            <button data-c="#ffffff" style="background:#ffffff"></button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Theme</label>
+          <select id="themeMode">
+            <option value="dark">Dark</option>
+            <option value="midnight">Midnight</option>
+            <option value="deepblue">Deep Blue</option>
+            <option value="black">Pure Black</option>
+          </select>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-database"></i> Data</h3>
+        <div class="field">
+          <button class="redux-go" style="width:100%;padding:10px;font-size:12px" id="exportData"><i class="fa-solid fa-download"></i> Export Settings</button>
+        </div>
+        <div class="field">
+          <button class="redux-go" style="width:100%;padding:10px;font-size:12px;background:rgba(255,102,128,0.15);color:#ff6680;box-shadow:none;border:1px solid rgba(255,102,128,0.3)" id="clearData"><i class="fa-solid fa-trash"></i> Clear All Data</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="redux-view" id="view-about">
+    <div class="settings-card">
+      <h3><i class="fa-solid fa-circle-info"></i> About ReduX</h3>
+      <div class="about-block">
+        <p>
+          <strong>ReduX</strong> is a static, fast web proxy built by <strong>viroda1</strong> &amp; <strong>UnblockableMan</strong>.
+          It runs entirely in your browser — no server backend required.
+          A Scramjet service worker proxies requests through a WISP transport, so ReduX works on any static host
+          (GitHub Pages, Cloudflare Pages, Netlify, Vercel) without a Node runtime.
+        </p>
+        <p>
+          Browse the open web, run built-in apps, and play 200+ games from a single page.
+          Type a URL in the search bar above and hit Go to start browsing.
+        </p>
+        <div class="links">
+          <a href="https://github.com/UnblockableMan/Cartel" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://github.com/UnblockableMan/Cartel/issues" target="_blank"><i class="fa-solid fa-bug"></i> Issues</a>
+          <a href="#" onclick="switchView('settings');return false"><i class="fa-solid fa-gear"></i> Settings</a>
+        </div>
+      </div>
+    </div>
+    <div class="settings-card" style="margin-top:14px">
+      <h3><i class="fa-solid fa-code"></i> Tech Stack</h3>
+      <div class="about-block">
+        <p style="font-size:12px;line-height:1.9">
+          <strong>Proxy:</strong> Scramjet (service worker) · WISP transport · Bare-Mux<br>
+          <strong>Frontend:</strong> Single-file HTML/CSS/JS, no build step<br>
+          <strong>Hosting:</strong> GitHub Pages / Cloudflare Pages / Netlify / Vercel<br>
+          <strong>Fonts:</strong> Inter · Font Awesome icons<br>
+          <strong>Games:</strong> 200+ local + remote titles<br>
+          <strong>Apps:</strong> PS5 UI, Spotify, Web Desktop, AI Chat, Files, Extensions
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="redux-footer">
+  <div class="links">
+    <a href="https://github.com/UnblockableMan/Cartel" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    <a href="#" onclick="switchView('about');return false">About</a>
+    <a href="#" onclick="switchView('settings');return false">Settings</a>
+  </div>
+  <div>ReduX v1.0 — built by viroda1 &amp; UnblockableMan · static · fast · proxy</div>
+</footer>
+
+<!-- VIEWER (local game/app iframe) -->
+<div id="viewer">
+  <div class="bar">
+    <button class="vbtn close" id="viewerClose"><i class="fa-solid fa-xmark"></i> Close</button>
+    <div class="title" id="viewerTitle">ReduX</div>
+    <button class="vbtn" id="viewerReload"><i class="fa-solid fa-rotate"></i> Reload</button>
+    <button class="vbtn" id="viewerOpen"><i class="fa-solid fa-arrow-up-right-from-square"></i> New Tab</button>
+  </div>
+  <div class="frame-wrap"><iframe id="viewerFrame" allow="autoplay; fullscreen; gamepad; microphone; camera" allowfullscreen></iframe></div>
+</div>
+
+<!-- BROWSER (proxied page) -->
+<div id="browser">
+  <div class="bar">
+    <button class="vbtn close" id="browserClose"><i class="fa-solid fa-arrow-left"></i> Back to ReduX</button>
+    <input type="text" class="url-input" id="browserUrl" placeholder="Enter URL..." spellcheck="false">
+    <button class="vbtn" id="browserReload"><i class="fa-solid fa-rotate"></i></button>
+    <button class="vbtn" id="browserOpen"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+  </div>
+  <div class="frame-wrap"><iframe id="browserFrame" allow="autoplay; fullscreen; gamepad; microphone; camera" allowfullscreen></iframe></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- MANIFEST -->
+<script>
+// Generate manifest on-the-fly since we may not have one on Pages
+if (!document.querySelector('link[rel="manifest"]')) {
+  const m = { "name":"ReduX","short_name":"ReduX","start_url":"./","scope":"./","display":"standalone","background_color":"#050811","theme_color":"#00e5ff","icons":[{"src":"assets/imgs/favicon-192.png","sizes":"192x192","type":"image/png"},{"src":"assets/imgs/favicon.svg","sizes":"any","type":"image/svg+xml"}] };
+  const blob = new Blob([JSON.stringify(m)], { type: 'application/json' });
+  document.querySelector('link[rel="manifest"]').href = URL.createObjectURL(blob);
+}
+</script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ReduX — static proxy logic
+   ═══════════════════════════════════════════════════════════════ */
+(function() {
+  'use strict';
+
+  // ---------- Helpers ----------
+  const $ = (id) => document.getElementById(id);
+  const LS = {
+    get: (k, d) => { try { return localStorage.getItem(k) ?? d; } catch { return d; } },
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+    del: (k) => { try { localStorage.removeItem(k); } catch {} }
+  };
+
+  function toast(msg, ms = 1800) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._tid);
+    t._tid = setTimeout(() => t.classList.remove('show'), ms);
+  }
+
+  // ---------- Default WISP servers ----------
+  const DEFAULT_WISP_SERVERS = [
+    { name: 'i-Ready Boston',     url: 'wss://i-ready.math.bostoncareercounselor.com/wisp/' },
+    { name: 'Mercury Public',     url: 'wss://mercurywork.shop/wisp/' },
+    { name: 'Wisp Demo',          url: 'wss://demo.wisp.mercurywork.shop/wisp/' },
+  ];
+
+  // ---------- State ----------
+  let gamesData = [];
+  let appsData = [];
+  let shortcutsData = [];
+  let activeCategory = 'all';
+  let searchQuery = '';
+  let activeWisp = LS.get('reduxWisp', DEFAULT_WISP_SERVERS[0].url);
+  let scramjetReady = false;
+
+  // ---------- Load data ----------
+  async function loadData() {
+    try {
+      const r = await fetch('assets/g.json');
+      gamesData = await r.json();
+    } catch (e) {
+      console.error('Failed to load games:', e);
+      gamesData = [];
+    }
+
+    // Build shortcuts from popular games + hand-picked sites
+    shortcutsData = [
+      { label: 'YouTube',    url: 'https://youtube.com',     icon: '<i class="fa-brands fa-youtube"></i>' },
+      { label: 'Reddit',     url: 'https://reddit.com',      icon: '<i class="fa-brands fa-reddit"></i>' },
+      { label: 'Twitter',    url: 'https://twitter.com',     icon: 'fa-brands fa-x-twitter' },
+      { label: 'Discord',    url: 'https://discord.com',     icon: '<i class="fa-brands fa-discord"></i>' },
+      { label: 'Spotify',    url: 'https://open.spotify.com',icon: '<i class="fa-brands fa-spotify"></i>' },
+      { label: 'Twitch',     url: 'https://twitch.tv',       icon: '<i class="fa-brands fa-twitch"></i>' },
+      { label: 'GitHub',     url: 'https://github.com',      icon: '<i class="fa-brands fa-github"></i>' },
+      { label: 'Wikipedia',  url: 'https://wikipedia.org',   icon: '<i class="fa-brands fa-wikipedia-w"></i>' },
+    ];
+
+    // Featured = popular games (first 10 with 'popular' category)
+    const featured = gamesData.filter(g => (g.categories||[]).includes('popular')).slice(0, 12);
+
+    renderShortcuts();
+    renderFeatured(featured);
+    renderChips();
+    renderGames();
+    renderApps();
+  }
+
+  // ---------- Render ----------
+  function renderShortcuts() {
+    const el = $('shortcuts');
+    el.innerHTML = '';
+    shortcutsData.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'shortcut';
+      div.innerHTML = `
+        <div class="ico">${s.icon.startsWith('<') ? s.icon : `<i class="${s.icon}"></i>`}</div>
+        <div class="label">${s.label}</div>
+        <div class="host">${new URL(s.url).hostname.replace('www.','')}</div>
+      `;
+      div.onclick = () => proxyGo(s.url);
+      el.appendChild(div);
+    });
+  }
+
+  function renderFeatured(list) {
+    const el = $('featured');
+    el.innerHTML = '';
+    if (!list.length) { el.innerHTML = '<div style="color:var(--text-faint);font-size:12px">No featured games yet.</div>'; return; }
+    list.forEach(g => el.appendChild(gameCard(g)));
+  }
+
+  function gameCard(g) {
+    const div = document.createElement('div');
+    div.className = 'game-card';
+    const initials = (g.name||'?').split(/\s+/).slice(0,2).map(w => w[0]||'').join('').toUpperCase();
+    const thumb = g.image
+      ? `<img src="${g.image}" alt="${g.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="ph" style="display:none">${initials}</div>`
+      : `<div class="ph">${initials}</div>`;
+    const badge = g.local ? `<div class="badge-local">LOCAL</div>` : '';
+    div.innerHTML = badge + `<div class="thumb">${thumb}</div><div class="name">${g.name}</div>`;
+    div.onclick = () => launchGame(g);
+    return div;
+  }
+
+  function renderChips() {
+    const el = $('chips');
+    const cats = new Set();
+    gamesData.forEach(g => (g.categories||[]).forEach(c => cats.add(c)));
+    const order = ['all','popular','multiplayer','3d','apps'];
+    const sorted = [...cats].sort((a,b) => {
+      const ia = order.indexOf(a), ib = order.indexOf(b);
+      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    });
+    el.innerHTML = '';
+    sorted.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'chip' + (c === activeCategory ? ' active' : '');
+      btn.textContent = c;
+      btn.onclick = () => {
+        activeCategory = c;
+        renderChips();
+        renderGames();
+      };
+      el.appendChild(btn);
+    });
+  }
+
+  function renderGames() {
+    const el = $('gamesGrid');
+    const filtered = gamesData.filter(g => {
+      const inCat = activeCategory === 'all' || (g.categories||[]).includes(activeCategory);
+      const inSearch = !searchQuery || (g.name||'').toLowerCase().includes(searchQuery);
+      return inCat && inSearch;
+    }).sort((a,b) => (a.name||'').localeCompare(b.name||''));
+    el.innerHTML = '';
+    if (!filtered.length) {
+      el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-faint)">No games match your search.</div>';
+      return;
+    }
+    filtered.forEach(g => el.appendChild(gameCard(g)));
+  }
+
+  function renderApps() {
+    const el = $('appsGrid');
+    const apps = [
+      { name: 'PS5 UI',       desc: 'PlayStation 5-style launcher', icon: '<i class="fa-solid fa-gamepad"></i>', link: 'apps/app-ps5.html' },
+      { name: 'Spotify',      desc: 'Embedded music player',         icon: '<i class="fa-brands fa-spotify"></i>', link: 'apps/app-spotify.html' },
+      { name: 'Web Desktop',  desc: 'Full window manager in a tab',  icon: '<i class="fa-solid fa-desktop"></i>', link: 'apps/app-web.html' },
+      { name: 'Arc AI',       desc: 'Quick AI assistant panel',      icon: '<i class="fa-solid fa-robot"></i>', link: 'apps/arc-ai.html' },
+      { name: 'Chat',         desc: 'Embedded chat',                 icon: '<i class="fa-solid fa-comments"></i>', link: 'apps/chat.html' },
+      { name: 'Files',        desc: 'File browser',                  icon: '<i class="fa-solid fa-folder"></i>', link: 'apps/files.html' },
+      { name: 'Extensions',   desc: 'Browser extensions manager',    icon: '<i class="fa-solid fa-puzzle-piece"></i>', link: 'apps/extensions.html' },
+      { name: 'Anchor OS',    desc: 'Anchor desktop variant',        icon: '<i class="fa-solid fa-anchor"></i>', link: 'apps/anchor.html' },
+    ];
+    el.innerHTML = '';
+    apps.forEach(a => {
+      const div = document.createElement('div');
+      div.className = 'app-card';
+      div.innerHTML = `<div class="ico">${a.icon}</div><div class="name">${a.name}</div><div class="desc">${a.desc}</div>`;
+      div.onclick = () => openViewer(a.link, a.name);
+      el.appendChild(div);
+    });
+  }
+
+  // ---------- Launch ----------
+  function launchGame(g) {
+    if (g.local || /^(\/|\.\/|\.\.\/)/.test(g.link||'')) {
+      openViewer(g.link, g.name);
+    } else {
+      proxyGo(g.link);
+    }
+  }
+
+  function openViewer(src, title) {
+    const v = $('viewer');
+    $('viewerTitle').textContent = title || 'ReduX';
+    $('viewerFrame').src = src;
+    v.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeViewer() {
+    const v = $('viewer');
+    v.classList.remove('active');
+    $('viewerFrame').src = 'about:blank';
+    document.body.style.overflow = '';
+  }
+  $('viewerClose').onclick = closeViewer;
+  $('viewerReload').onclick = () => { const f = $('viewerFrame'); f.src = f.src; };
+  $('viewerOpen').onclick = () => { const f = $('viewerFrame'); if (f.src && f.src !== 'about:blank') window.open(f.src, '_blank'); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeViewer(); });
+
+  // ---------- Scramjet + Wisp ----------
+  async function ensureScramjet() {
+    if (scramjetReady) return true;
+    try {
+      if (typeof $scramjetLoadController === 'undefined') {
+        await new Promise(r => setTimeout(r, 200));
+        if (typeof $scramjetLoadController === 'undefined') return false;
+      }
+      const { ScramjetController } = $scramjetLoadController();
+      const ctrl = new ScramjetController({
+        prefix: location.origin + location.pathname.replace(/[^/]*$/, '') + 'scramjet/',
+        files: {
+          wasm: 'https://cdn.jsdelivr.net/gh/Destroyed12121/Staticsj@main/JS/scramjet.wasm.wasm',
+          all:  'https://cdn.jsdelivr.net/gh/Destroyed12121/Staticsj@main/JS/scramjet.all.js',
+          sync: 'https://cdn.jsdelivr.net/gh/Destroyed12121/Staticsj@main/JS/scramjet.sync.js'
+        }
+      });
+      await ctrl.init('/sw.js');
+      scramjetReady = true;
+      console.log('[ReduX] Scramjet controller ready');
+      return true;
+    } catch (e) {
+      console.error('[ReduX] Scramjet init failed:', e);
+      return false;
+    }
+  }
+
+  async function setWispTransport() {
+    try {
+      const BM = window.BareMux;
+      if (!BM) { console.warn('BareMux not loaded'); return false; }
+      const conn = new BM.BareMuxConnection('/bareworker.js');
+      await conn.setTransport(activeWisp);
+      console.log('[ReduX] Wisp transport set:', activeWisp);
+      return true;
+    } catch (e) {
+      console.error('[ReduX] Failed to set wisp transport:', e);
+      return false;
+    }
+  }
+
+  async function proxyGo(url) {
+    if (!url) return;
+    if (!/^https?:\/\//.test(url)) url = 'https://' + url;
+    toast('Connecting to ' + new URL(url).hostname + '…', 1400);
+    const ok = await ensureScramjet();
+    if (!ok) { toast('Proxy not ready — try again', 2200); return; }
+    await setWispTransport();
+    const ctrl = $scramjetLoadController();
+    const encoded = 'scramjet/' + ctrl.encodeUrl(url);
+    openBrowser(encoded, url);
+  }
+
+  // ---------- Browser view ----------
+  function openBrowser(src, displayUrl) {
+    const b = $('browser');
+    $('browserUrl').value = displayUrl || src;
+    $('browserFrame').src = src;
+    b.classList.add('active');
+  }
+  function closeBrowser() {
+    const b = $('browser');
+    b.classList.remove('active');
+    $('browserFrame').src = 'about:blank';
+  }
+  $('browserClose').onclick = closeBrowser;
+  $('browserReload').onclick = () => { const f = $('browserFrame'); f.src = f.src; };
+  $('browserOpen').onclick = () => { const f = $('browserFrame'); if (f.src && f.src !== 'about:blank') window.open(f.src, '_blank'); };
+  $('browserUrl').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const u = e.target.value.trim();
+      if (u) proxyGo(u);
+    }
+  });
+
+  // ---------- Search form ----------
+  $('searchForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const q = $('searchInput').value.trim();
+    if (!q) return;
+    if (/^https?:\/\//.test(q) || /^[a-z0-9-]+\.[a-z]{2,}/i.test(q)) {
+      proxyGo(q);
+    } else {
+      const eng = $('engine').value;
+      proxyGo(eng + encodeURIComponent(q));
+    }
+  });
+
+  // ---------- Tabs ----------
+  window.switchView = function(name) {
+    document.querySelectorAll('.redux-view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+    document.querySelectorAll('.redux-toolbar .tab').forEach(t => t.classList.toggle('active', t.dataset.view === name));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  document.querySelectorAll('.redux-toolbar .tab').forEach(t => {
+    t.onclick = () => switchView(t.dataset.view);
+  });
+
+  // ---------- Settings ----------
+  function renderServerList() {
+    const el = $('serverList');
+    const servers = JSON.parse(LS.get('reduxServers', JSON.stringify(DEFAULT_WISP_SERVERS)));
+    el.innerHTML = '';
+    servers.forEach(s => {
+      const opt = document.createElement('div');
+      opt.className = 'server-opt' + (s.url === activeWisp ? ' active' : '');
+      opt.innerHTML = `
+        <div class="dot"></div>
+        <div class="meta">
+          <div class="name">${s.name}</div>
+          <div class="url">${s.url}</div>
+        </div>
+        <div class="ping">—</div>
+      `;
+      opt.onclick = async () => {
+        activeWisp = s.url;
+        LS.set('reduxWisp', s.url);
+        renderServerList();
+        await setWispTransport();
+        toast('Switched to ' + s.name);
+      };
+      el.appendChild(opt);
+      // ping
+      pingServer(s.url).then(r => {
+        opt.querySelector('.ping').textContent = r.success ? r.latency + 'ms' : 'down';
+        opt.querySelector('.dot').style.background = r.success ? 'var(--accent)' : '#ef4444';
+      });
+    });
+  }
+
+  function pingServer(url) {
+    return new Promise(resolve => {
+      const start = Date.now();
+      try {
+        const ws = new WebSocket(url);
+        const t = setTimeout(() => { try { ws.close(); } catch {}; resolve({ url, success: false, latency: null }); }, 3000);
+        ws.onopen = () => { clearTimeout(t); try { ws.close(); } catch {}; resolve({ url, success: true, latency: Date.now() - start }); };
+        ws.onerror = () => { clearTimeout(t); resolve({ url, success: false, latency: null }); };
+      } catch { resolve({ url, success: false, latency: null }); }
+    });
+  }
+
+  $('addWisp').onclick = () => {
+    const inp = $('customWisp');
+    const url = inp.value.trim();
+    if (!url || !/^wss?:\/\//.test(url)) { toast('Enter a valid wss:// URL'); return; }
+    const servers = JSON.parse(LS.get('reduxServers', JSON.stringify(DEFAULT_WISP_SERVERS)));
+    servers.push({ name: 'Custom', url });
+    LS.set('reduxServers', JSON.stringify(servers));
+    inp.value = '';
+    renderServerList();
+    toast('Added custom server');
+  };
+
+  $('wisp-btn').onclick = () => switchView('settings');
+
+  // accent color
+  document.querySelectorAll('#accentPicker button').forEach(b => {
+    b.style.cssText += 'width:32px;height:32px;border-radius:8px;border:2px solid var(--edge);cursor:pointer';
+    b.onclick = () => {
+      const c = b.dataset.c;
+      document.documentElement.style.setProperty('--accent', c);
+      document.documentElement.style.setProperty('--edge-strong', c + '55');
+      document.documentElement.style.setProperty('--gradient', `linear-gradient(135deg, ${c} 0%, ${c} 100%)`);
+      LS.set('reduxAccent', c);
+      toast('Accent updated');
+    };
+  });
+
+  // theme mode
+  $('themeMode').onchange = (e) => {
+    const mode = e.target.value;
+    const themes = {
+      dark:     { bg: '#050811', soft: '#0a0d1c' },
+      midnight: { bg: '#020308', soft: '#050811' },
+      deepblue: { bg: '#08111f', soft: '#0d1a2e' },
+      black:    { bg: '#000000', soft: '#0a0a0a' }
+    };
+    const t = themes[mode] || themes.dark;
+    document.documentElement.style.setProperty('--bg', t.bg);
+    document.documentElement.style.setProperty('--bg-soft', t.soft);
+    LS.set('reduxTheme', mode);
+    toast('Theme: ' + mode);
+  };
+
+  // data export/clear
+  $('exportData').onclick = () => {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('redux')) data[k] = localStorage.getItem(k);
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'redux-settings.json';
+    a.click();
+    toast('Settings exported');
+  };
+
+  $('clearData').onclick = () => {
+    if (!confirm('Clear all ReduX data? This cannot be undone.')) return;
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('redux')) keys.push(k);
+    }
+    keys.forEach(k => LS.del(k));
+    toast('All data cleared');
+    setTimeout(() => location.reload(), 800);
+  };
+
+  // ---------- Restore saved preferences ----------
+  function restorePrefs() {
+    const accent = LS.get('reduxAccent', null);
+    if (accent) {
+      document.documentElement.style.setProperty('--accent', accent);
+      document.documentElement.style.setProperty('--edge-strong', accent + '55');
+    }
+    const theme = LS.get('reduxTheme', null);
+    if (theme) {
+      $('themeMode').value = theme;
+      $('themeMode').dispatchEvent(new Event('change'));
+    }
+  }
+
+  // ---------- Boot ----------
+  async function boot() {
+    restorePrefs();
+    await loadData();
+    renderServerList();
+    // hide boot overlay
+    setTimeout(() => $('boot').classList.add('hidden'), 1200);
+    // register service worker
+    if ('serviceWorker' in navigator) {
+      try {
+        await navigator.serviceWorker.register('sw.js', { scope: './' });
+        console.log('[ReduX] Service worker registered');
+      } catch (e) {
+        console.warn('[ReduX] SW registration failed:', e);
+      }
+    }
+    // games search
+    $('gamesSearch').addEventListener('input', e => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderGames();
+    });
+  }
+
+  boot();
+
+})();
+</script>
+
+</body>
+</html>

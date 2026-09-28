@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="r-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="r-stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="r-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="56" ry="56" fill="#070912"/>
+  <rect x="8" y="8" width="240" height="240" rx="56" ry="56" fill="none" stroke="url(#r-stroke)" stroke-width="2" opacity="0.55"/>
+  <g filter="url(#r-glow)">
+    <path d="M 78 70 L 78 188 L 100 188 L 100 142 L 138 142 L 168 188 L 196 188 L 162 138 C 184 128 184 92 152 78 C 142 72 130 70 116 70 Z"
+      fill="url(#r-grad)"/>
+    <path d="M 100 92 L 130 92 C 148 92 156 100 156 114 C 156 128 148 122 130 122 L 100 122 Z" fill="#070912"/>
+  </g>
+  <g filter="url(#r-glow)" stroke="url(#r-stroke)" stroke-width="3" stroke-linecap="round">
+    <line x1="180" y1="70" x2="220" y2="58"/>
+    <line x1="178" y1="86" x2="216" y2="78"/>
+    <line x1="180" y1="100" x2="218" y2="98"/>
+  </g>
+</svg>
